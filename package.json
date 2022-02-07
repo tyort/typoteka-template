@@ -8,7 +8,8 @@
     "eslint": "eslint --ext .js,.ts src/",
     "dev": "tsc --watch",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "start": "ts-node ./src/service/service.ts --generate 10"
+    "start": "ts-node ./src/service/service.ts",
+    "nodemon": "nodemon -e ts,js --exec npm run start"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "eslint": "8.8.0",
     "eslint-config-htmlacademy": "5.0.0",
     "eslint-config-prettier": "^8.3.0",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "tslint": "^6.1.3"
