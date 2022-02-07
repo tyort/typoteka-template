@@ -6,6 +6,7 @@ env:
 
 ignorePatterns:
   '**/express/public/**/*.js'
+  'template'
 
 # This tells ESLint to run the code through a parser when analyzing the code
 parser:
