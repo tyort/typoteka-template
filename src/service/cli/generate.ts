@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
+import chalk from "chalk";
 import fs from "fs";
-import { categories, announceParts, titles, DEFAULT_COUNT, FILE_NAME } from "../../const";
+import { categories, announceParts, titles, DEFAULT_COUNT, FILE_NAME} from "../../const";
 import { Publication } from "../../types";
 import { getRandomInt, getShuffledArray, generateDateByMs } from "../../utils";
 
@@ -30,8 +31,8 @@ const generate = {
     // создание, чтение, запись, удаление и так далее.
     fs.writeFile(`src/${FILE_NAME}`, content, (err) => {
       return err
-        ? console.error(`Can't write data to file...`)
-        : console.log(`Operation success. File created.`);
+        ? console.error(chalk.red(`Can't write data to file...`))
+        : console.log(chalk.green(`Operation success. File created.`));
     });
 
   }
