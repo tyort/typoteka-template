@@ -5,8 +5,7 @@ env:
   node: true
 
 ignorePatterns:
-  '**/express/public/**/*.js'
-  'template'
+  '**/ssr/public/**/*.js'
 
 # This tells ESLint to run the code through a parser when analyzing the code
 parser:
@@ -30,3 +29,6 @@ rules:
   'no-shadow': 'off'
   '@typescript-eslint/no-shadow': ['error']
   quotes: ["error", "backtick"]
+  new-cap: ["error", {
+    "capIsNewExceptionPattern": "^Router"
+  }]

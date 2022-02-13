@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse, createServer } from "http";
 import {promises} from "fs";
 import { HttpCode } from "../../const";
 import { Publication } from "../../types";
-import path from "path";
+// import path from "path";
 
 const DEFAULT_PORT = 3005;
 const FILENAME = `mocks.json`;
