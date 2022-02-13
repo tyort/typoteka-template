@@ -8,9 +8,11 @@
     "eslint": "eslint --ext .js,.ts src/",
     "dev": "tsc --watch",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "start": "ts-node ./src/service/service.ts --server 3000",
-    "inspect": "node inspect -r ts-node/register ./src/service/service.ts",
-    "nodemon": "nodemon -e ts,js --exec npm run start"
+    "start-backend": "ts-node ./src/service/service.ts --server 3000",
+    "start-backend-nodemon": "nodemon -e ts,js --exec npm run start",
+    "start-frontend": "ts-node ./src/ssr/index.ts",
+    "start-frontend-nodemon": "nodemon -e ts,js --exec npm run start-frontend",
+    "inspect": "node inspect -r ts-node/register ./src/service/service.ts"
   },
   "repository": {
     "type": "git",
