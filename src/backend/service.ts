@@ -1,7 +1,6 @@
 import { Cli } from "./cli";
 import { ExitCode } from "../const";
 
-
 // Все параметры, которые ввёл пользователь, доступны в массиве process.argv.
 // process.argv[0] - записан путь к интерпретатору, то есть к Node.js.
 // process.argv[1] - хранит путь к нашему сценарию.

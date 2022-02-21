@@ -4,4 +4,4 @@ export type Publication = {
   fullText: string,
   createdDate: string,
   category: string[]
-}
+};
