@@ -18,5 +18,5 @@
     "resolveJsonModule": true
   },
   // Включаем папки для компиляции
-  "include": ["src/service/**/*", "src/*.ts"],
+  "include": ["src/backend/**/*", "src/*.ts"],
 }
