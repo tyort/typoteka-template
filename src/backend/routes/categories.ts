@@ -8,7 +8,7 @@ export default (app: Router, service: CategoryService) => {
   app.use(`/categories`, route);
 
   route.get(`/`, async (req, res) => {
-    const categories = await service.findAll();
+    const categories = await service.findAll() as string[];
     res
       .status(HttpCode.OK)
       .json(categories);
