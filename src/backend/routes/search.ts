@@ -10,19 +10,20 @@ export default (app: Router, service: SearchService) => {
   route.get(`/`, (req, res) => {
     const {query = ``} = req.query;
 
-    if (!query) {
-      return res
+    if (query) {
+      const searchResults = service.findAll(query as string);
+      const searchStatus = searchResults.length > 0
+        ? HttpCode.OK
+        : HttpCode.NOT_FOUND;
+
+      res
+        .status(searchStatus)
+        .json(searchResults);
+
+    } else {
+      res
         .status(HttpCode.BAD_REQUEST)
         .json([]);
     }
-
-    const searchResults = service.findAll(query as string);
-    const searchStatus = searchResults.length > 0
-      ? HttpCode.OK
-      : HttpCode.NOT_FOUND;
-
-    return res
-      .status(searchStatus)
-      .json(searchResults);
   });
 };
