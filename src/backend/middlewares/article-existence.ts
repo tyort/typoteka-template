@@ -13,6 +13,6 @@ export default (service: ArticleService) => (req: Request, res: Response, next: 
   } else {
     res
       .status(HttpCode.NOT_FOUND)
-      .send(`Article with ${articleId} not found`);
+      .send(`Article with id=${articleId} not found`);
   }
 };

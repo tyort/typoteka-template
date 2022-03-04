@@ -7,7 +7,7 @@ export class ArticleService {
     this._articles = articles;
   }
 
-  create(article: Omit<Publication, `id`>) {
+  create(article: Omit<Publication, `id` | `comments`>) {
     const newArticle: Publication = {...article, id: nanoid(6), comments: []}
     this._articles.push(newArticle);
     return newArticle;
@@ -30,8 +30,11 @@ export class ArticleService {
     return this._articles.find((article) => article.id === articleId);
   }
 
-  update(articleId: string, article: Omit<Publication, `id`>) {
-    const oldArticle = this._articles.find((publication) => publication.id === articleId) as Publication;
-    return {...oldArticle, article};
+  update(articleId: string, article: Omit<Publication, `id` | `comments`>) {
+    const index = this._articles.findIndex((publication) => publication.id === articleId);
+    const updatedArticle = {...this._articles[index], ...article} as Publication;
+    this._articles = [...this._articles.slice(0, index), updatedArticle, ...this._articles.slice(index + 1)];
+
+    return updatedArticle;
   }
 }

@@ -3,9 +3,14 @@ import { Publication, Comment } from "../../types";
 
 export class CommentService {
   create(article: Publication, comment: Omit<Comment, `id`>) {
-    const newComment = {...comment, id: nanoid(6)} as Comment;
-    article.comments.push(newComment);
-    return newComment;
+    if (comment.text) {
+      const newComment = {...comment, id: nanoid(6)} as Comment;
+      article.comments.push(newComment);
+      return newComment;
+
+    } else {
+      return null;
+    }
   }
 
   delete(article: Publication, articleId: string) {

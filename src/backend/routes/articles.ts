@@ -10,17 +10,18 @@ export default (app: Router, articleService: ArticleService, commentService: Com
 
   route.get(`/`, (req, res) => {
     const articles = articleService.findAll();
+
     res
       .status(HttpCode.OK)
       .json(articles);
   });
 
   route.post(`/`, (req, res) => {
-    type ShortPublication = Omit<Publication, `id`>;
-    const cuttedArticle = req.body as ShortPublication;
+    type ShortPublication = Omit<Publication, `id` | `comments`>;
+    const cuttedArticle = req.body as ShortPublication; // ????? проверить, как поведет в браузере
     const article = articleService.create(cuttedArticle);
 
-    return res
+    res
       .status(HttpCode.CREATED)
       .json(article);
   });
@@ -42,7 +43,7 @@ export default (app: Router, articleService: ArticleService, commentService: Com
   });
 
   route.put(`/:articleId`, (req, res) => {
-    type ShortPublication = Omit<Publication, `id`>;
+    type ShortPublication = Omit<Publication, `id` | `comments`>;
     const cuttedArticle = req.body as ShortPublication;
     const {articleId} = req.params;
     const existedArticle = articleService.findOne(articleId);
@@ -72,7 +73,7 @@ export default (app: Router, articleService: ArticleService, commentService: Com
     } else {
       return res
         .status(HttpCode.NOT_FOUND)
-        .send(`Not found`);
+        .send(`Not found article with ${articleId}`);
     }
   });
 
@@ -89,11 +90,18 @@ export default (app: Router, articleService: ArticleService, commentService: Com
     const {article} = res.locals;
     type ShortComment = Omit<Comment, `id`>;
     const cuttedComment = req.body as ShortComment;
-    const comment = commentService.create(article, cuttedComment);
+    const comment: Comment | null = commentService.create(article, cuttedComment);
 
-    return res
-      .status(HttpCode.CREATED)
-      .json(comment);
+    if (comment) {
+      return res
+        .status(HttpCode.CREATED)
+        .json(comment);
+
+    } else {
+      return res
+        .status(HttpCode.BAD_REQUEST)
+        .send(`Comment data is invalid`);
+    }
   });
 
   route.delete(`/:articleId/comments/:commentId`, articleExistence(articleService), (req, res) => {
@@ -109,7 +117,7 @@ export default (app: Router, articleService: ArticleService, commentService: Com
     } else {
       return res
         .status(HttpCode.NOT_FOUND)
-        .send(`Not found`);
+        .send(`Comment with id:${commentId} isn't founded`);
     }
   });
 };
