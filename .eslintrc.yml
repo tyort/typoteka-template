@@ -22,7 +22,8 @@ plugins: ['@typescript-eslint']
 extends: ['htmlacademy/node', 'eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier']
 
 rules:
-  '@typescript-eslint/no-unused-vars': 'error'
+  # Игнорируем неиспользуемые аргументы с символом "_"
+  '@typescript-eslint/no-unused-vars': ["error", {"argsIgnorePattern": "^_"}]
   # To enforce using type for object type definitions, can be type or interface
   '@typescript-eslint/consistent-type-definitions': ['error', 'type']
   'no-console': 'off'
