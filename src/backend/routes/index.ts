@@ -4,12 +4,11 @@ import articles from "../routes/articles";
 import categories from "../routes/categories";
 import { getMockData } from "../library/get-mocks";
 import { SearchService, CategoryService, ArticleService, CommentService } from "../classes";
-import { Publication } from "../../types";
 
 export const app = Router();
 
 (async () => {
-  const mockData = await getMockData() as Publication[];
+  const mockData = await getMockData();
 
   categories(app, new CategoryService(mockData));
   search(app, new SearchService(mockData));
