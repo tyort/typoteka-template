@@ -3,6 +3,7 @@ import pino from "pino";
 export const logger = pino({
   name: `base-logger`,
   level: `debug`,
+  prettyPrint: true
 });
 
 // Метод всегда возвращает новый логгер, унаследованный от стандартного логгера.
