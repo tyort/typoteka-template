@@ -12,10 +12,12 @@
     "test": "npm run editorconfig && npm run eslint",
     "dev": "tsc --watch",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "start-backend": "ts-node ./src/backend/main.ts --generate 8",
-    "start-backend-nodemon": "nodemon -e ts,js,json --exec npm run start-backend",
+    "start-backend": "ts-node ./src/backend/main.ts --server",
+    "start-backend::dev": "ts-node -r dotenv/config ./src/backend/main.ts --server",
+    "start-backend-nodemon": "nodemon --exec npm run start-backend",
+    "start-backend-nodemon::dev": "nodemon --exec npm run start-backend::dev",
     "start-frontend": "ts-node ./src/frontend/index.ts",
-    "start-frontend-nodemon": "nodemon -e ts,js,json --exec npm run start-frontend",
+    "start-frontend-nodemon": "nodemon --exec npm run start-frontend",
     "inspect": "node inspect -r ts-node/register ./src/backend/main.ts"
   },
   "repository": {
@@ -51,8 +53,12 @@
   "dependencies": {
     "chalk": "4.1.2",
     "dayjs": "^1.10.7",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "nanoid": "^3.3.1",
     "pino": "^7.8.0"
+  },
+  "nodemonConfig": {
+    "ext": "js,json,ts,html,pug"
   }
 }
