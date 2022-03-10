@@ -12,6 +12,7 @@ app.use(`/articles`, articlesRoutes);
 app.use(`/my`, myRoutes);
 app.use(`/`, mainRoutes);
 
+app.use(express.static(path.resolve(__dirname, `public`)));
 app.set(`views`, path.resolve(__dirname, `templates`)); // путь к директории, в которой будут храниться все наши pug-шаблоны
 app.set(`view engine`, `pug`);
 
