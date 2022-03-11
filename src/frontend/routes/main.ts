@@ -14,10 +14,10 @@ mainRouter.get(`/`, async (req, res) => {
 
   const getFormatedDate = (createdDate: string, formatDate: string): string => {
     return dayjs(createdDate).format(formatDate);
-  }
+  };
   const getCountByCategory = (category: string): number => {
     return articles.filter((article: Publication) => article.category.includes(category)).length;
-  }
+  };
 
   res.render(`main`, {
     articles: articles as Publication[],

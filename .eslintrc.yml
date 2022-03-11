@@ -33,3 +33,4 @@ rules:
   new-cap: ["error", {
     "capIsNewExceptionPattern": "^Router"
   }]
+  semi: ["error", "always"]
