@@ -7,8 +7,9 @@ class SearchService {
   }
 
   findAll(searchText: string) {
+    const enteredText = new RegExp(`${searchText}`, `i`);
     return this._articles
-      .filter((article: Publication) => article.title.includes(searchText));
+      .filter((article: Publication) => article.title.match(enteredText));
   }
 }
 
