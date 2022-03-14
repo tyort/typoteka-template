@@ -8,7 +8,7 @@ export class ArticleService {
   }
 
   create(article: Omit<Publication, `id` | `comments`>) {
-    const newArticle: Publication = {...article, id: nanoid(6), comments: []}
+    const newArticle: Publication = {...article, id: nanoid(6), comments: []};
     this._articles.push(newArticle);
     return newArticle;
   }
@@ -17,7 +17,7 @@ export class ArticleService {
     const deletedArticle = this._articles.find((article) => article.id === articleId);
     this._articles = deletedArticle
       ? this._articles.filter((item) => item.id !== articleId)
-      : this._articles
+      : this._articles;
 
     return deletedArticle ? deletedArticle : null;
   }
