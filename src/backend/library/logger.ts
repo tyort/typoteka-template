@@ -8,7 +8,7 @@ const onPinoPretty = {
   options: {
     colorize: true
   }
-}
+};
 
 export const logger = pino({
   name: `base-logger`,
