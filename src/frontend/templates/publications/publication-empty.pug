@@ -5,7 +5,7 @@ block content
     section
       div(class='popup popup--new-publication popup--anti')
         div(class='new-publication')
-          form(action='#', method='POST')
+          form(action='#', method='POST', enctype='multipart/form-data', autocomplete='off')
             div(class='new-publication__header')
               h1 Новая публикация
               div(class='new-publication__date-form')
@@ -25,13 +25,13 @@ block content
               div(class='form__wrapper form__wrapper--intro')
                 div(class='form__field')
                   label
-                    input(type='text', name='title', placeholder='Заголовок', required=true)
+                    input(type='text', name='title-text', placeholder='Заголовок', required=true)
                 div(class='form__field form__field--post-image')
                   label
                     input#image-name-field(type='text', name='photo', placeholder='Фотография', readonly=true)
                   div(class='form__image-loader form__image-loader--publication')
                     label
-                      input(class='visually-hidden', type='file', name='upload')
+                      input(class='visually-hidden', type='file', name='avatar')
                       | Обзор
                 div(class='new-publication__category-wrapper')
                   a(class='new-publication__form-link button button--transparent', href='#') Добавить категорию
