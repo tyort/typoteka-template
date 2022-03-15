@@ -120,7 +120,7 @@ const mockData = [
     "title": `Самый лучший музыкальный альбом этого года`,
     "comments": [{ "id": `KE3Xy2`, "text": `Совсем немного...` }]
   }
-]
+];
 
 const app = express();
 app.use(json());
@@ -134,7 +134,7 @@ describe(`API returns Article based on search query`, () => {
     response = await request(app)
       .get(`/search`)
       .query({
-        query: `Обзор новейшего смартфона`
+        title: `Обзор новейшего смартфона`
       });
   });
 
@@ -147,7 +147,7 @@ test(`API returns code 404 if nothing is found`,
     () => request(app)
       .get(`/search`)
       .query({
-        query: `Продам свою душу`
+        title: `Продам свою душу`
       })
       .expect(HttpCode.NOT_FOUND)
 );
