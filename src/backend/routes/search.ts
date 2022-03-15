@@ -8,10 +8,10 @@ export default (app: Router, service: SearchService) => {
   app.use(`/search`, route);
 
   route.get(`/`, (req, res) => {
-    const {query = ``} = req.query;
+    const {title = ``} = req.query;
 
-    if (query) {
-      const searchResults = service.findAll(query as string);
+    if (title) {
+      const searchResults = service.findAll(title as string);
       const searchStatus = searchResults.length > 0
         ? HttpCode.OK
         : HttpCode.NOT_FOUND;

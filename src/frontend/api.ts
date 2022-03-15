@@ -29,8 +29,8 @@ export class API {
     return this._load(`/articles/${id}`);
   }
 
-  search(query: string) {
-    return this._load(`/search`, {params: {query}});
+  search(title: string) {
+    return this._load(`/search`, {params: {title}});
   }
 
   getCategories() {
