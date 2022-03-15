@@ -156,6 +156,7 @@ describe(`API returns a list of all articles`, () => {
 
 describe(`API creates an article if data is valid`, () => {
   const newOffer: Omit<Publication, `id` | `comments`> = {
+    picture: `sdflfk.png`,
     announce: `Ну не знаю что это... может, для мужиков`,
     title: `Какая-то резиновая штука`,
     fullText: `Большая и гладкая штуковина, похожая на огурец`,
@@ -215,6 +216,7 @@ describe(`API returns a message with non-existent id`, () => {
 
 describe(`API changes existent article`, () => {
   const updatedArticle: Omit<Publication, `id` | `comments`> = {
+    picture: `fkfj4mfj.png`,
     announce: `Ну не знаю что это... может, для мужиков`,
     title: `Какая-то резиновая штука`,
     fullText: `Большая и гладкая штуковина, похожая на огурец`,
@@ -248,6 +250,7 @@ describe(`API changes existent article`, () => {
 
 describe(`API tries to change non-existent article`, () => {
   const updatedArticle: Omit<Publication, `id` | `comments`> = {
+    picture: `djrjnv346.png`,
     announce: `Ну не знаю что это... может, для мужиков`,
     title: `Какая-то резиновая штука`,
     fullText: `Большая и гладкая штуковина, похожая на огурец`,
