@@ -26,6 +26,7 @@ const generatePublications = (count: number, mockContent: {[propertyName: string
     .fill({})
     .map(() => ({
       id: nanoid(6),
+      picture: `${nanoid(6)}.png`,
       category: [categories[getRandomInt(0, categories.length - 1)]],
       fullText: getShuffledArray(announceParts)
         .slice(1, getRandomInt(0, announceParts.length - 1))
@@ -34,7 +35,7 @@ const generatePublications = (count: number, mockContent: {[propertyName: string
       createdDate: dayjs(generateDateByMs()).format(`YYYY-MM-DD HH:mm:ss`),
       title: titles[getRandomInt(0, titles.length - 1)],
       comments: generateComments(getRandomInt(1, 4), comments)
-    }))
+    }));
   };
 
 const readContent = async (filePath: string) => {

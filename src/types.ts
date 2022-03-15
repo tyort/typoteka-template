@@ -1,5 +1,6 @@
 export type Publication = {
   id: string,
+  picture: string,
   announce: string,
   title: string,
   fullText: string,
