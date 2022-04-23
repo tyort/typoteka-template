@@ -4,6 +4,7 @@ import { ErrorRequestHandler } from "express-serve-static-core";
 import { getLogger } from "../library/logger";
 import { HttpCode } from "../../const";
 import routes from "../routes";
+import sequelize from "../library/sequelize";
 
 const logger = getLogger({name: `backend-server`});
 const DEFAULT_PORT = 3005;
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
   logger.debug(`Request on route ${req.url}`);
   res.on(`finish`, () => {
     const color = res.statusCode >= 400 ? `red` : `green`;
-    logger.info(chalk[color](`Response status code ${res.statusCode}`))
+    logger.info(chalk[color](`Response status code ${res.statusCode}`));
   });
   next();
 });
@@ -40,6 +41,16 @@ app.use(errorRequestMiddleware);
 export default {
   name: `--server`,
   async run(args: string[]) {
+    try {
+      logger.info(`Trying to connect to database...`);
+      await sequelize.authenticate();
+      logger.info(`Connection to database established`);
+
+    } catch (err) {
+      logger.error(`An error occured: ${(err as Error).message}`);
+      process.exit(1);
+    }
+
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
 
