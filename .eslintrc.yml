@@ -31,6 +31,6 @@ rules:
   '@typescript-eslint/no-shadow': ['error']
   quotes: ["error", "backtick"]
   new-cap: ["error", {
-    "capIsNewExceptionPattern": "^Router"
+    "capIsNewExceptionPattern": ["^Router", "^DataTypes\\.."]
   }]
   semi: ["error", "always"]
