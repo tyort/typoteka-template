@@ -1,3 +1,4 @@
+// ?????? Разобраться с типами
 export type Publication = {
   id: string,
   picture: string,
@@ -7,6 +8,17 @@ export type Publication = {
   createdDate: string,
   category: string[],
   comments: Comment[]
+}
+
+// ?????? Разобраться с типами
+export type ArticleAttributes = {
+  id: number,
+  picture: string,
+  announce: string,
+  title: string,
+  fullText: string,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 export type Comment = {
