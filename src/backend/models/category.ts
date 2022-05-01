@@ -1,6 +1,6 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional, Sequelize, DataTypes } from 'sequelize';
 
-class Category extends Model<InferAttributes<Category>, InferCreationAttributes<Category>> {
+export class Category extends Model<InferAttributes<Category>, InferCreationAttributes<Category>> {
   declare id: CreationOptional<number>;
   declare name: string;
 }

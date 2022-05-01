@@ -2,10 +2,11 @@
 // InferCreationAttributesработает так же, как и InferAttributesс одним исключением:
 //   свойства, введенные с использованием этого CreationOptionalтипа, будут помечены как необязательные;
 import { DataTypes, Sequelize, Model, InferAttributes,
-  InferCreationAttributes, CreationOptional } from "sequelize";
+  InferCreationAttributes, CreationOptional, NonAttribute, Association, HasManyAddAssociationsMixin } from "sequelize";
+import { Category } from "./category";
 
 // interface вместо class - не подойдет, т.к. в таком случае TS не сможет определитю ассоциации модели во время компиляции. И в классе мы должны их объявить
-class Article extends Model<InferAttributes<Article>, InferCreationAttributes<Article>> {
+class Article extends Model<InferAttributes<Article, { omit: `categories` }>, InferCreationAttributes<Article, { omit: `categories` }>> {
   // 'CreationOptional' is a special type that marks the field as optional
   // when creating an instance of the model (such as using Model.create()).
   declare id: CreationOptional<number>;
@@ -15,6 +16,12 @@ class Article extends Model<InferAttributes<Article>, InferCreationAttributes<Ar
   declare fullText: string | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+  declare categories?: NonAttribute<Category[]>;
+  declare addCategories: HasManyAddAssociationsMixin<Category, number>;
+
+  declare static associations: {
+    projects: Association<Article, Category>;
+  };
 }
 
 export const defineArticle = (sequelize: Sequelize) => Article.init(
