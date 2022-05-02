@@ -14,8 +14,6 @@ class Article extends Model<InferAttributes<Article, { omit: `categories` }>, In
   declare announce: string;
   declare title: string;
   declare fullText: string | null;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
   declare categories?: NonAttribute<Category[]>;
   declare addCategories: HasManyAddAssociationsMixin<Category, number>;
 
@@ -41,11 +39,7 @@ export const defineArticle = (sequelize: Sequelize) => Article.init(
       type: DataTypes.STRING(250),
       allowNull: false
     },
-    fullText: DataTypes.STRING(1000),
-    // technically, `createdAt` & `updatedAt` are added by Sequelize and don't need to be configured in Model.init
-    // but the typings of Model.init do not know this. Add the following to mute the typing error:
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    fullText: DataTypes.STRING(1000)
   },
   {
     sequelize,

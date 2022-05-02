@@ -23,3 +23,16 @@ export const getShuffledArray = (someArray: string[]) => {
 
   return someArray;
 };
+
+export const getRandomSubarray = (items: string[]) => {
+  items = items.slice();
+  let count = getRandomInt(1, items.length - 1);
+  const result = [];
+  while (count--) {
+    result.push(
+        // Удаляет "1" элемент из массива по индексу "getRandomInt(0, items.length - 1)"
+        ...items.splice(getRandomInt(0, items.length - 1), 1)
+    );
+  }
+  return result;
+};

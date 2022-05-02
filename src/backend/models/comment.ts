@@ -2,7 +2,7 @@ import { Model, InferAttributes, InferCreationAttributes, CreationOptional, Sequ
 
 class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
   declare id: CreationOptional<number>;
-  declare name: string;
+  declare text: string;
 }
 
 export const defineComment = (sequelize: Sequelize) => Comment.init(
@@ -12,7 +12,7 @@ export const defineComment = (sequelize: Sequelize) => Comment.init(
       autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    text: {
       type: DataTypes.STRING,
       allowNull: false
     }

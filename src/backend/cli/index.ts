@@ -1,4 +1,4 @@
-import generate from "./generate";
+import filldb from "./filldb";
 import version from "./version";
 import help from "./help";
 import server from "./server";
@@ -9,7 +9,7 @@ type cliModule = {
 }
 
 export const Cli = {
-  [generate.name]: generate as cliModule,
+  [filldb.name]: filldb as cliModule,
   [help.name]: help as cliModule,
   [version.name]: version as cliModule,
   [server.name]: server as cliModule,
