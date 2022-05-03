@@ -3,9 +3,7 @@ import { Comment } from "../../types";
 
 export class CommentService {
   private _Comment;
-  private _Article;
   constructor(sequelize: Sequelize) {
-    this._Article = sequelize.models.Article;
     this._Comment = sequelize.models.Comment;
   }
 
