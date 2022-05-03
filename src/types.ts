@@ -3,7 +3,7 @@ export type ArticleAttributes = {
   announce: string,
   title: string,
   fullText: string,
-  categories: string[],
+  categories: string[] | number[],
   comments: Comment[]
 }
 

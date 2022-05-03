@@ -1,40 +1,75 @@
-import { nanoid } from "nanoid";
-import { Publication } from "../../types";
+import { Sequelize } from "sequelize";
+import { ArticleAttributes } from "../../types";
+import { Article as SameArticle} from "../models/article";
+// По учебнику: Article === sequelize.models.Article
 
+type AllModels = {
+  Article: typeof SameArticle
+}
 export class ArticleService {
-  private _articles;
-  constructor(articles: Publication[]) {
-    this._articles = articles;
+  private _Article;
+  private _Comment;
+  private _Category;
+  constructor(sequelize: Sequelize, {Article}: AllModels) {
+    this._Article = Article;
+    this._Comment = sequelize.models.Comment;
+    this._Category = sequelize.models.Category;
   }
 
-  create(article: Omit<Publication, `id` | `comments`>) {
-    const newArticle: Publication = {...article, id: nanoid(6), comments: []};
-    this._articles.push(newArticle);
-    return newArticle;
+  async create(articleData: ArticleAttributes) {
+    const newArticle = await this._Article.create(articleData);
+    await newArticle.addCategories(articleData.categories as number[]);
+    return newArticle.get(); // ??????
   }
 
-  delete(articleId: string) {
-    const deletedArticle = this._articles.find((article) => article.id === articleId);
-    this._articles = deletedArticle
-      ? this._articles.filter((item) => item.id !== articleId)
-      : this._articles;
-
-    return deletedArticle ? deletedArticle : null;
+  async delete(articleId: number) {
+    const deletedRows = await this._Article.destroy({
+      where: {id: articleId}
+    });
+    return !!deletedRows;
   }
 
-  findAll() {
-    return this._articles;
+  async findAll(needComments: boolean) {
+    const include = needComments
+      ? [`categories`, `comments`]
+      : [`categories`];
+
+    const articles = await this._Article.findAll({
+      include,
+      order: [
+        [`createdAt`, `DESC`]
+      ]
+    });
+    return articles.map((article) => article.get());
   }
 
-  findOne(articleId: string) {
-    return this._articles.find((article) => article.id === articleId);
+  async findOne(articleId: number, needComments: boolean) {
+    const include = needComments
+    ? [`categories`, `comments`]
+    : [`categories`];
+    const article = await this._Article.findByPk(articleId, {include});
+    return article;
   }
 
-  update(articleId: string, article: Omit<Publication, `id` | `comments`>) {
-    const index = this._articles.findIndex((publication) => publication.id === articleId);
-    const updatedArticle = {...this._articles[index], ...article} as Publication;
-    this._articles = [...this._articles.slice(0, index), updatedArticle, ...this._articles.slice(index + 1)];
+  // async findPage({limit, offset}) {
+  //   const {count, rows} = await this._Offer.findAndCountAll({
+  //     limit,
+  //     offset,
+  //     include: [Aliase.CATEGORIES],
+  //     order: [
+  //       [`createdAt`, `DESC`]
+  //     ],
+  //     distinct: true
+  //   });
+  //   return {count, offers: rows};
+  // }
 
-    return updatedArticle;
+  async update(articleId: number, article: ArticleAttributes) {
+    const asdasdasd = await this._Article.update(article, {
+      where: {id: articleId}
+    });
+    const [affectedRows] = asdasdasd;
+    console.log(asdasdasd); // ???????
+    return !!affectedRows;
   }
 }

@@ -1,35 +1,41 @@
-import { nanoid } from "nanoid";
-import { Publication, Comment } from "../../types";
+import { Sequelize } from "sequelize";
+import { Comment } from "../../types";
 
 export class CommentService {
-  create(article: Publication, comment: Omit<Comment, `id`>) {
+  private _Comment;
+  private _Article;
+  constructor(sequelize: Sequelize) {
+    this._Article = sequelize.models.Article;
+    this._Comment = sequelize.models.Comment;
+  }
+
+  create(articleId: number, comment: Comment) {
     if (comment.text) {
-      const newComment = {...comment, id: nanoid(6)} as Comment;
-      article.comments.push(newComment);
-      return newComment;
+      return this._Comment.create({
+        articleId,
+        ...comment
+      });
 
     } else {
       return null;
     }
   }
 
-  delete(article: Publication, articleId: string) {
-    const deletedComment = article.comments
-      .find((item) => item.id === articleId);
+  async delete(commentId: number) {
+    const deletedRows = await this._Comment.destroy({
+      where: {
+        id: commentId
+      }
+    });
 
-    if (deletedComment) {
-      article.comments = article.comments
-        .filter((item) => item.id !== articleId);
-
-      return deletedComment;
-
-    } else {
-      return null;
-    }
+    return !!deletedRows;
   }
 
-  findAll(article: Publication) {
-    return article.comments;
+  findAll(articleId: number) {
+    return this._Comment.findAll({
+      where: {articleId},
+      raw: true // ???????
+    });
   }
 }
 

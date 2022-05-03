@@ -1,17 +1,13 @@
-import { Publication } from "../../types";
+import { Sequelize } from "sequelize";
 
 export class CategoryService {
-  private _articles;
-  constructor(articles: Publication[]) {
-    this._articles = articles;
+  private _Category;
+  constructor(sequelize: Sequelize) {
+    this._Category = sequelize.models.Category;
   }
 
-  findAll() {
-    const categories = this._articles.reduce((acc, item) => {
-      item.category.forEach((category) => acc.add(category));
-      return acc;
-    }, new Set());
-
-    return [...categories];
+  async findAll() {
+    // raw: true - получаем данные в «сыром» виде — только данные, без дополнительной информации о метаданных.
+    return await this._Category.findAll({raw: true});
   }
 }

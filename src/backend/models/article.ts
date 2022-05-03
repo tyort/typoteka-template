@@ -6,7 +6,7 @@ import { DataTypes, Sequelize, Model, InferAttributes,
 import { Category } from "./category";
 
 // interface вместо class - не подойдет, т.к. в таком случае TS не сможет определитю ассоциации модели во время компиляции. И в классе мы должны их объявить
-class Article extends Model<InferAttributes<Article, { omit: `categories` }>, InferCreationAttributes<Article, { omit: `categories` }>> {
+export class Article extends Model<InferAttributes<Article, { omit: `categories` }>, InferCreationAttributes<Article, { omit: `categories` }>> {
   // 'CreationOptional' is a special type that marks the field as optional
   // when creating an instance of the model (such as using Model.create()).
   declare id: CreationOptional<number>;
