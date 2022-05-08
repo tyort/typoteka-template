@@ -26,7 +26,7 @@ export class ArticleService {
     const deletedRows = await this._Article.destroy({
       where: {id: articleId}
     });
-    return !!deletedRows;
+    return deletedRows;
   }
 
   async findAll(needComments: boolean) {
@@ -65,11 +65,9 @@ export class ArticleService {
   // }
 
   async update(articleId: number, article: ArticleAttributes) {
-    const asdasdasd = await this._Article.update(article, {
+    const [affectedRows] = await this._Article.update(article, {
       where: {id: articleId}
     });
-    const [affectedRows] = asdasdasd;
-    console.log(asdasdasd); // ???????
-    return !!affectedRows;
+    return affectedRows;
   }
 }

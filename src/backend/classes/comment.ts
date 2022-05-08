@@ -1,18 +1,24 @@
-import { Sequelize } from "sequelize";
-import { Comment } from "../../types";
+import { Comment as CommentAttributes} from "../../types";
+import { Comment as CommentModel } from "../models/comment";
+
+
+type AllModels = {
+  Comment: typeof CommentModel
+}
 
 export class CommentService {
   private _Comment;
-  constructor(sequelize: Sequelize) {
-    this._Comment = sequelize.models.Comment;
+  constructor({Comment}: AllModels) {
+    this._Comment = Comment;
   }
 
-  create(articleId: number, comment: Comment) {
+  async create(articleId: number, comment: CommentAttributes) {
     if (comment.text) {
-      return this._Comment.create({
+      const createdComment: CommentModel = await this._Comment.create({
         articleId,
         ...comment
       });
+      return createdComment; // ??????
 
     } else {
       return null;
@@ -26,14 +32,15 @@ export class CommentService {
       }
     });
 
-    return !!deletedRows;
+    return deletedRows;
   }
 
-  findAll(articleId: number) {
-    return this._Comment.findAll({
+  async findAll(articleId: number) {
+    const asdad = await this._Comment.findAll({
       where: {articleId},
       raw: true // ???????
     });
+    return asdad; // ??????
   }
 }
 

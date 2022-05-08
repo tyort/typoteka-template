@@ -1,8 +1,10 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, Sequelize, DataTypes } from 'sequelize';
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional, Sequelize, DataTypes, ForeignKey } from 'sequelize';
+import { Article } from "./article";
 
-class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
+export class Comment extends Model<InferAttributes<Comment>, InferCreationAttributes<Comment>> {
   declare id: CreationOptional<number>;
   declare text: string;
+  declare articleId: ForeignKey<Article[`id`]>;
 }
 
 export const defineComment = (sequelize: Sequelize) => Comment.init(
