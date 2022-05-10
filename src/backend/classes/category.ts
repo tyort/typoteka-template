@@ -47,11 +47,10 @@ export class CategoryService {
           attributes: []
         }]
       });
-      return result.map((it) => it.get()); // ??????
+      return result.map((it) => it.get());
 
     } else {
-      // raw: true - получаем данные в «сыром» виде — только данные, без дополнительной информации о метаданных.
-      return await this._Category.findAll({raw: true}); // ???????
+      return await this._Category.findAll({raw: true});
     }
   }
 }
