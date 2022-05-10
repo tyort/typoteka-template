@@ -19,7 +19,7 @@ export class ArticleService {
   async create(articleData: ArticleAttributes) {
     const newArticle = await this._Article.create(articleData);
     await newArticle.addCategories(articleData.categories as number[]);
-    return newArticle.get(); // ??????
+    return newArticle.get();
   }
 
   async delete(articleId: number) {
@@ -36,6 +36,9 @@ export class ArticleService {
 
     const articles = await this._Article.findAll({
       include,
+      // false - появляется доступ к методу get(), который избавляет информацию от метаданных.
+      // true - нет метода get(). Нет метаданных. Есть доп.свойства(столбцы) для понимания связи с другими таблицами;
+      // raw: true(или false),
       order: [
         [`createdAt`, `DESC`]
       ]

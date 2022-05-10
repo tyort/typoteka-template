@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { InferAttributes } from "sequelize";
 import { HttpCode } from "../../const";
 import { ArticleAttributes, Comment as CommentAttributes } from "../../types";
 import { ArticleService, CommentService } from "../classes";
@@ -7,25 +6,34 @@ import articleExistence from "../middlewares/article-existence";
 import { Article } from "../models/article";
 import { Comment } from "../models/comment";
 
+// То же самое, что и InferAttributes<Article, {omit: "categories"}>[]
+export type ReformedArticleAttributes = Omit<ArticleAttributes, `categories`> & {
+  id: number;
+}
+
 export default (app: Router, articleService: ArticleService, commentService: CommentService) => {
   const route = Router();
   app.use(`/articles`, route);
 
   route.get(`/`, async (req, res) => {
     // const {offset, limit } = req.query;
-    const {needComments} = req.query; // ??????
+    const {needComments} = req.query;
     // const articles = limit || offset
     //  ? await articleService.findPage({limit, offset})
     //  : await articleService.findAll(!!needComments);
-    const articles = await articleService.findAll(!!needComments);
+
+    // article(из articles) - данные в первозданном виде за счет метода get() в sequelize;
+    // Добавились свойства: id, createdAt, updatedAt, categories*, comments(опицонально)* - *за счет метода include в sequelize;
+    const articles: ReformedArticleAttributes[] = await articleService.findAll(!!needComments);
     res
       .status(HttpCode.OK)
       .json(articles);
   });
 
   route.post(`/`, async (req, res) => {
-    const cuttedArticle: ArticleAttributes = req.body;
-    const article: InferAttributes<Article, {omit: `categories`}>= await articleService.create(cuttedArticle);
+    // article - данные в первозданном виде за счет метода get() в sequelize;
+    // Добавились свойства: id, createdAt, updatedAt;
+    const article: ReformedArticleAttributes = await articleService.create(req.body as ArticleAttributes);
 
     res
       .status(HttpCode.CREATED)
@@ -35,7 +43,9 @@ export default (app: Router, articleService: ArticleService, commentService: Com
   route.get(`/:articleId`, async (req, res) => {
     const {articleId} = req.params;
     const {needComments} = req.query;
-    const article: Article | null = await articleService.findOne(Number(articleId), !!needComments); // ??????
+    // Помимо свойств: id, createdAt, updatedAt, categories*, comments(опицонально)* - добавились метаданные;
+    // Примечание: * - за счет include в sequelize;
+    const article: Article | null = await articleService.findOne(Number(articleId), !!needComments);
 
     if (article) {
       return res
@@ -51,12 +61,13 @@ export default (app: Router, articleService: ArticleService, commentService: Com
 
   route.put(`/:articleId`, async (req, res) => {
     const {articleId} = req.params;
+    // Кол-во измененных строк в таблице;
     const affectedRows: number = await articleService.update(Number(articleId), req.body);
 
     return affectedRows > 0
       ? res
         .status(HttpCode.OK)
-        .send(`Aricle with id${articleId} updated ${affectedRows} rows`)
+        .send(`Aricle with id${articleId} was updated`)
       : res
         .status(HttpCode.NOT_FOUND)
         .send(`Not found article with ${articleId}`);
@@ -69,7 +80,7 @@ export default (app: Router, articleService: ArticleService, commentService: Com
     return deletedRows > 0
       ? res
         .status(HttpCode.OK)
-        .json(deletedRows) // ??????? что за deletedRows
+        .send(`Article with id=${articleId} was deleted`)
       : res
         .status(HttpCode.NOT_FOUND)
         .send(`Not found article with ${articleId}`);
@@ -77,9 +88,8 @@ export default (app: Router, articleService: ArticleService, commentService: Com
 
   route.get(`/:articleId/comments`, articleExistence(articleService), async (req, res) => {
     const {articleId} = req.params;
-    const comments: InferAttributes<Comment, {
-      omit: `id` | `text`;
-    }>[] = await commentService.findAll(Number(articleId)); // ???????
+    // Комментарии со всеми метаданными
+    const comments: Comment[] = await commentService.findAll(Number(articleId));
 
     res
       .status(HttpCode.OK)
@@ -103,15 +113,12 @@ export default (app: Router, articleService: ArticleService, commentService: Com
     const {commentId} = req.params;
     const deletedRows: number = await commentService.delete(Number(commentId));
 
-    if (deletedRows > 0) {
-      return res
+    return deletedRows > 0
+      ? res
         .status(HttpCode.OK)
-        .json(deletedRows); // ????????
-
-    } else {
-      return res
+        .send(`Comment with id:${commentId} was deleted`)
+      : res
         .status(HttpCode.NOT_FOUND)
         .send(`Comment with id:${commentId} isn't founded`);
-    }
   });
 };

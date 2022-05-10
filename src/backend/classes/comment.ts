@@ -36,11 +36,10 @@ export class CommentService {
   }
 
   async findAll(articleId: number) {
-    const asdad = await this._Comment.findAll({
+    const comments = await this._Comment.findAll({
       where: {articleId},
-      raw: true // ???????
     });
-    return asdad; // ??????
+    return comments;
   }
 }
 

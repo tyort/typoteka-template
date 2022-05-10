@@ -1,10 +1,9 @@
 export type ArticleAttributes = {
-  picture: string,
+  picture: string | null,
   announce: string,
   title: string,
-  fullText: string,
-  categories: string[] | number[],
-  comments: Comment[]
+  fullText: string | null,
+  categories: string[] | number[]
 }
 
 export type Comment = {
