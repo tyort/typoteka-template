@@ -36,11 +36,11 @@ export class CategoryService {
       //   8 | Программирование |            7
       const result = await this._Category.findAll({
         attributes: [
-          `categories.id`,
-          `categories.name`,
+          `id`,
+          `name`,
           [Sequelize.fn(`COUNT`, `*`), `n_categories`]
         ],
-        group: [Sequelize.col(`categories.id`)],
+        group: [Sequelize.col(`id`)],
         include: [{
           model: this._ArticleCategory,
           as: `articlesCategories`,
