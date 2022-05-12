@@ -7,11 +7,11 @@ const route = Router();
 export default (app: Router, service: SearchService) => {
   app.use(`/search`, route);
 
-  route.get(`/`, (req, res) => {
+  route.get(`/`, async (req, res) => {
     const {title = ``} = req.query;
 
     if (title) {
-      const searchResults = service.findAll(title as string);
+      const searchResults = await service.findAll(title as string);
       const searchStatus = searchResults.length > 0
         ? HttpCode.OK
         : HttpCode.NOT_FOUND;

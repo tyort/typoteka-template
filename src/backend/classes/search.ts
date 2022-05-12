@@ -1,5 +1,11 @@
 import { Op, Sequelize } from "sequelize";
 
+const ucFirst = (entry: string) => {
+  return entry
+    ? entry[0].toUpperCase() + entry.slice(1).toLowerCase()
+    : entry;
+};
+
 class SearchService {
   private _Article;
   constructor(sequelize: Sequelize) {
@@ -7,13 +13,14 @@ class SearchService {
   }
 
   async findAll(searchText: string) {
-    const enteredText = new RegExp(`${searchText}`, `i`);
-    // this._articles
-    //   .filter((article: Publication) => article.title.match(enteredText));
+    const textWithCapital = ucFirst(searchText);
     const articles = await this._Article.findAll({
       where: {
         title: {
-          [Op.substring]: enteredText
+          [Op.or]: {
+            [Op.substring]: searchText.toLowerCase(),
+            [Op.startsWith]: textWithCapital
+          }
         }
       },
       include: [`categories`],
