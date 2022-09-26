@@ -43,6 +43,7 @@ export class ArticleService {
         [`createdAt`, `DESC`]
       ]
     });
+    // "categories" и "comments" - добавляются со всеми метаданными;
     return articles.map((article) => article.get());
   }
 
