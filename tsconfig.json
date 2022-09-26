@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-      "target": "ES2021", // преобразование *.ts в *.js
-      "module": "CommonJS",
-      "outDir": "./dist", // куда скомпилируются файлы. Здесь хранятся файлы *.js
-      "sourceMap": true, // появятся файлы js.map в /dist
-      "watch": true, // при команде tsc запустится watch режим
-      "rootDir": "./src", // корневая директория, откуда берем файлы *.ts
-      "allowJs": true, // файлы *.js также переносятся из папки /src в папку /dist
-      "checkJs": false,
-      "strict": true, // все строгое
-      "moduleResolution": "node",
-      "allowSyntheticDefaultImports": true, // могу писать "import React from 'react'" вместо "import * as React from 'react'"
-      "esModuleInterop": true, // можем импортировать esModule
-      "skipLibCheck": true, // ускоряет компиляцию, если две библиотеки имеют две копии одних и тех же типов
-      "forceConsistentCasingInFileNames": true, // учитывается регистр при меновании файлов
+    "target": "ES2021", // преобразование *.ts в *.js
+    "module": "CommonJS",
+    "outDir": "./dist", // куда скомпилируются файлы. Здесь хранятся файлы *.js
+    // "sourceMap": true, // появятся файлы js.map в /dist
+    "watch": true, // при команде tsc запустится watch режим
+    "rootDir": "", // с помощью этой опции можно ограничить область выборки файлов для компиляции. В качестве значения выступает строка — путь до конкретной директории или файла.
+    // "baseUrl": "./src", // указывает базовый путь, относительно которого будет производиться поиск модулей
+    "allowJs": true, // файлы *.js также переносятся из папки /src в папку /dist
+    "checkJs": false,
+    "strict": true, // все строгое
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true, // могу писать "import React from 'react'" вместо "import * as React from 'react'"
+    "esModuleInterop": true, // можем импортировать esModule
+    "skipLibCheck": true, // ускоряет компиляцию, если две библиотеки имеют две копии одних и тех же типов
+    "forceConsistentCasingInFileNames": true, // учитывается регистр при меновании файлов
+    "resolveJsonModule": true
   },
   // Включаем папки для компиляции
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/backend/**/*", "src/*.ts"],
 }

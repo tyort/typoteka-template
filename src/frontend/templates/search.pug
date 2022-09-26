@@ -1,0 +1,19 @@
+extends layout.pug
+
+block content
+  main
+    section(class='search-page')
+      div(class='search-page__wrapper')
+        h1 Поиск
+        div(class='search search-page__form')
+          form(method='get', action='/search', autocomplete='off')
+            label
+              input(type='search', name='title',  placeholder='Что ищем?', value=title)
+            button(class='search__button button button--transparent', type='submit') Найти
+          if articles.length > 0
+            each article in articles
+              div(class='search__result')
+                time(class='search__date', datetime=`${getFormatedDate(article.createdDate, `YYYY-MM-DDTHH:mm`)}`) #{getFormatedDate(article.createdDate, `DD.MM.YYYY, HH:mm`)}
+                a(class='search__link') #{article.title}
+          else if articles.length === 0 && title
+            p(class='search-page__empty') Ничего не нашлось

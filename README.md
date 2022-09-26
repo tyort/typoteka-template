@@ -42,3 +42,8 @@
 
 * 404.html — пример страницы для статус ответа 404.
 * 500.html — пример отображения ошибок сервера.
+
+### Оптимизация под typescript
+
+* @typescript-eslint/parser: parser that allows ESLint to understand TypeScript code
+* @typescript-eslint/eslint-plugin: plugin with a set of recommended TypeScript rules

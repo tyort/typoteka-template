@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -9,6 +11,10 @@ export const generateDateByMs = () => {
   return new Date(milliseconds);
 };
 
+export const getFormatedDate = (createdDate: string, formatDate: string): string => {
+  return dayjs(createdDate).format(formatDate);
+};
+
 export const getShuffledArray = (someArray: string[]) => {
   for (let i = someArray.length - 1; i > 0; i--) {
     const randomPosition = Math.floor(Math.random() * i);
@@ -16,4 +22,17 @@ export const getShuffledArray = (someArray: string[]) => {
   }
 
   return someArray;
+};
+
+export const getRandomSubarray = (items: string[]) => {
+  items = items.slice();
+  let count = getRandomInt(1, items.length - 1);
+  const result = [];
+  while (count--) {
+    result.push(
+        // Удаляет "1" элемент из массива по индексу "getRandomInt(0, items.length - 1)"
+        ...items.splice(getRandomInt(0, items.length - 1), 1)
+    );
+  }
+  return result;
 };

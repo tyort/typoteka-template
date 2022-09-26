@@ -1,8 +1,20 @@
+# Folder игнорирует файл или каталог в любом месте дерева.
+# /Folder игнорирует файл или каталог в корне дерева.
+# Folder/ игнорирует каталог в любом месте дерева.
+
 node_modules/
-build/*
+template
+
+# Директория с собранными файлами проекта
+build/
+upload/
+
+mock.json
 .idea/
 *.log
 *.lock
 .DS_Store
 Thumbs.db
 *~
+
+.env

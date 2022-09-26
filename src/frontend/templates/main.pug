@@ -1,0 +1,99 @@
+extends layout.pug
+
+block content
+  main(class='main-page')
+    h1(class='visually-hidden') Главная страница личного блога Типотека
+    p
+      | Это приветственный текст, который владелец блога может выбрать, чтобы описать себя 👏
+    section(class='main-page__theme-list')
+      h2(class='visually-hidden') Список тем
+      ul(class='themes')
+        each category in categories
+          li(class='themes__item')
+            a(class='themes__item-link', href='#') #{category}
+              sup #{getCountByCategory(category)}
+    div(class='main-page__section-flex')
+      section(class='main-page__hot hot')
+        h2(class='hot__name') Самое обсуждаемое
+          span(class='hot__icon hot__icon--fire')
+        ul(class='hot__list')
+          li(class='hot__list-item')
+            a(class='hot__list-link', href='#')
+              | Билл Гейтс впервые за два года возглавил рейтинг самых богатых людей
+              | мира по версии Bloomberg
+              sup(class='hot__link-sup') 12
+          li(class='hot__list-item')
+            a(class='hot__list-link', href='#')
+              | Сервис для аналитики Telegram-чатов Combot попал под блокировку из-за
+              | информации на служебной
+              sup(class='hot__link-sup') 15
+              | странице
+          li(class='hot__list-item hot__list-item--margin')
+            a(class='hot__list-link', href='#')
+              | Модель Кайли Дженнер продаст 51% своей компании Kylie Cosmetics
+              | владельцу Factor за $600 млн
+              sup(class='hot__link-sup') 52
+          li(class='hot__list-item hot__list-item--end')
+            a(class='hot__list-link', href='#')
+              | Tesla получила 146 тысяч предзаказов на электрический пикап Cybertruck
+              | за двое суток
+              sup(class='hot__link-sup') 153
+      section(class='main-page__last last')
+        h2(class='last__name') Последние комментарии
+          span(class='last__icon last__icon--cloud')
+        ul(class='last__list')
+          li(class='last__list-item')
+            img(class='last__list-image', src='img/avatar-small-1.png', width='20', height='20', alt='Аватар пользователя')
+            b(class='last__list-name') Анна Артамонова
+            a(class='last__list-link', href='#')
+              | Сервис аренды жилья Airbnb стал глобальным партнером Международного
+              | олимпийского комитета
+              | (МОК) на девять лет, в течение которых пройдет пять Олимпиад, в том числе в Токио в 2020 году.
+          li(class='last__list-item')
+            img(class='last__list-image', src='img/avatar-small-2.png', width='20', height='20', alt='Аватар пользователя')
+            b(class='last__list-name') Александр Петров
+            a(class='last__list-link', href='#')
+              | Главреды «Дождя», Forbes и других СМИ попросили Роскомнадзор
+              | разъяснить штрафы за ссылки на
+              | сайты с матом
+          li(class='last__list-item last__list-item--end')
+            img(class='last__list-image', src='img/avatar-small-3.png', width='20', height='20', alt='Аватар пользователя')
+            b(class='last__list-name') Игорь Шманский
+            a(class='last__list-link', href='#')
+              | Что-то все электрокары в последнее время все на одно лицо
+              | делаются))
+    section(class='main-page__list preview')
+      h2(class='visually-hidden') Список превью статей
+      ul(class='preview__list')
+        each article in articles
+          li(class='preview__item')
+            ul(class='preview__breadcrumbs')
+              each category in article.category
+                li(class='preview__breadcrumbs-item')
+                  a(class='preview__breadcrumbs-link', href='#') #{category}
+            div(class='preview__background')
+              img(class='preview__background-image', src='img/skyscraper@1x.jpg', width='460', height='240', srcset='img/skyscraper@1x.jpg 1x, img/skyscraper@2x.jpg 2x', alt='Фотография небоскреба')
+            time(class='preview__time', datetime=`${getFormatedDate(article.createdDate, `YYYY-MM-DDTHH:mm`)}`) #{getFormatedDate(article.createdDate, `DD.MM.YYYY, HH:mm`)}
+            h3(class='preview__name')
+              a(class='preview__name-link', href='#') #{article.title}
+            p(class='preview__text')
+              | #{article.announce}
+            a(class='preview__comment', href='#') Комментарии
+              span(class='preview__cloud')
+              b(class='preview__comment-count') #{article.comments.length}
+    div(class='preview__toggle-wrapper')
+      ul(class='preview__pagination pagination')
+        li
+          a(class='pagination__button button button--backwards button--disabled', href='#', aria-label='Страница назад') Назад
+        li(class='pagination__item pagination__item--active')
+          a(href='#') 1
+        li(class='pagination__item')
+          a(href='#') 2
+        li(class='pagination__item')
+          a(href='#') 3
+        li(class='pagination__item')
+          a(href='#') 4
+        li(class='pagination__item')
+          a(href='#') 5
+        li
+          a(class='pagination__button button button--forward', href='#', aria-label='Страница вперед') Вперед

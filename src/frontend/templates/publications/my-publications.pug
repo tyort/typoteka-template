@@ -1,0 +1,13 @@
+extends ../layout.pug
+
+block content
+  main(class='main-page main-page--padding')
+    section(class='main-page__notes notes')
+      h1(class='notes__title') Мои записи
+      ul(class='notes__list')
+        each article in articles
+          li(class='notes__list-item')
+            time(class='notes__item-time', datetime=`${getFormatedDate(article.createdDate, `YYYY-MM-DDTHH:mm`)}`) #{getFormatedDate(article.createdDate, `DD.MM.YYYY, HH:mm`)}
+            a(class='notes__item-text', href='#') #{article.announce}
+            button(class='notes__button button button--close-item', type='button')
+              span(class='visually-hidden') Закрыть строку списка

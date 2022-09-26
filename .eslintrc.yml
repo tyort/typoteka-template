@@ -1,0 +1,36 @@
+env:
+  jest: true
+  browser: true
+  es2021: true
+  node: true
+
+ignorePatterns:
+  '**/frontend/public/**/*.js'
+
+# This tells ESLint to run the code through a parser when analyzing the code
+parser:
+  '@typescript-eslint/parser'
+
+parserOptions:
+  ecmaVersion: 2021
+  sourceType: 'module'
+
+plugins: ['@typescript-eslint']
+
+# tells ESLint what configuration is set to extend from.
+# The order matters, as the last extend option will override the previous ones in any conflicting configurations
+extends: ['htmlacademy/node', 'eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier']
+
+rules:
+  # Игнорируем неиспользуемые аргументы с символом "_"
+  '@typescript-eslint/no-unused-vars': ["error", {"argsIgnorePattern": "^_"}]
+  # To enforce using type for object type definitions, can be type or interface
+  '@typescript-eslint/consistent-type-definitions': ['error', 'type']
+  'no-console': 'off'
+  'no-shadow': 'off'
+  '@typescript-eslint/no-shadow': ['error']
+  quotes: ["error", "backtick"]
+  new-cap: ["error", {
+    "capIsNewExceptionPattern": "^DataTypes\\..|^Router"
+  }]
+  semi: ["error", "always"]
